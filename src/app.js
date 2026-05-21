@@ -9,7 +9,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
   credentials: true,
-  origin: "https://social-media-frontend-gules-five.vercel.app/login",
+  origin: "https://social-media-frontend-gules-five.vercel.app",
 }));
 
 const authRouter = require('./routes/auth.route')
