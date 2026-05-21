@@ -1,8 +1,8 @@
 const userModel = require('../models/user.model')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
- 
- async function registerController(req, res)  {
+
+async function registerController(req, res) {
     const { username, email, password, bio, profile } = req.body;
 
     const isUserExist = await userModel.findOne({
@@ -37,12 +37,17 @@ const jwt = require('jsonwebtoken')
         { expiresIn: '2d' }
     )
 
-    res.cookie("token", token)
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        maxAge: 2 * 24 * 60 * 60 * 1000
+    })
 
     res.status(201).json({
         message: "Register Successful",
         user: {
-            _id:user._id,
+            _id: user._id,
             username: user.username,
             email: user.email,
             bio: user.bio,
@@ -50,8 +55,8 @@ const jwt = require('jsonwebtoken')
         }
     })
 }
- 
- async function loginController (req, res) {
+
+async function loginController(req, res) {
     const { email, username, password } = req.body;
 
     const user = await userModel.findOne({
@@ -85,13 +90,18 @@ const jwt = require('jsonwebtoken')
         { expiresIn: "2d" }
     )
 
-    res.cookie("token", token)
+   res.cookie("token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    maxAge: 2 * 24 * 60 * 60 * 1000
+})
 
     res.status(201).json(
         {
             message: "login successfull",
             user: {
-                _id:user._id,
+                _id: user._id,
                 username: user.username,
                 email: user.email,
                 bio: user.bio,
@@ -102,32 +112,32 @@ const jwt = require('jsonwebtoken')
 }
 
 async function getMeController(req, res) {
-  try {
-    const userId = req.user.id;
+    try {
+        const userId = req.user.id;
 
-    const user = await userModel.findById(userId);
+        const user = await userModel.findById(userId);
 
-    if (!user) {
-      return res.status(404).json({
-        message: "User not found",
-      });
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found",
+            });
+        }
+
+        res.status(200).json({
+            user: {
+                _id: user._id,
+                username: user.username,
+                email: user.email,
+                bio: user.bio,
+                profile: user.profile,
+            },
+        });
+
+    } catch (err) {
+        console.log("getMe Error:", err);
+        res.status(500).json({
+            message: "Server error",
+        });
     }
-
-    res.status(200).json({
-      user: {
-        _id: user._id,
-        username: user.username,
-        email: user.email,
-        bio: user.bio,
-        profile: user.profile,
-      },
-    });
-
-  } catch (err) {
-    console.log("getMe Error:", err);
-    res.status(500).json({
-      message: "Server error",
-    });
-  }
 }
-module.exports = {registerController , loginController, getMeController}
+module.exports = { registerController, loginController, getMeController }
