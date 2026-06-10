@@ -26,7 +26,7 @@ io.on("connection", (socket) => {
     onlineUsers.set(userId, socket.id);
   });
 
-  socket.on("sendMessage", ({ senderId, receiverId, text }) => {
+  socket.on("sendMessage", ({ senderId, receiverId, text }) => { 
     const receiverSocket = onlineUsers.get(receiverId);
 
     if (receiverSocket) {
