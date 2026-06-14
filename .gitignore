@@ -1,5 +1,5 @@
 # ================= DEPENDENCIES =================
-node_modules/
+node_modules/ 
 
 # ================= ENV =================
 .env
