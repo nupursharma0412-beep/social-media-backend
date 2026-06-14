@@ -21,7 +21,7 @@ yarn-error.log*
 
 # ================= CACHE =================
 .cache/
-.parcel-cache/ 
+.parcel-cache/  
 
 # ================= TEST =================
 coverage/
