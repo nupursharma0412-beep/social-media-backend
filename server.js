@@ -12,7 +12,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "https://social-media-frontend-ashen.vercel.app",
+    origin: "https://social-media-backend-1-sd6h.onrender.com",
     credentials: true,
   },
 });

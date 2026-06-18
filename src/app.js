@@ -10,7 +10,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "https://social-media-frontend-ashen.vercel.app",
+    origin: "https://social-media-backend-1-sd6h.onrender.com",
     credentials: true,
   })
 );
